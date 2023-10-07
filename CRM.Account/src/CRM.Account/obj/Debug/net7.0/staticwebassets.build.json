@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "FXJy8tftonkoBQF7SVSHtubQRhkGRdXnUCeMNLg9O+Y=",
+  "Source": "CRM.Account",
+  "BasePath": "_content/CRM.Account",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
