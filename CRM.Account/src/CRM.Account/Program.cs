@@ -1,9 +1,11 @@
 using System.Text;
+using CRM.Account;
 using CRM.Account.AccountManagement;
 using CRM.Account.Entities;
 using CRM.Account.JWT;
 using CRM.Common.MongoDb;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +23,7 @@ builder.Services.AddAuthentication(options =>
 })
 .AddJwtBearer(options =>
     {
+        options.SaveToken = true;
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
@@ -32,7 +35,16 @@ builder.Services.AddAuthentication(options =>
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"]))
         };
     });
-builder.Services.AddAuthorization();
+
+builder.Services.AddAuthorization(options =>
+    {
+        options.AddPolicy("AdminPolicy", policy =>
+        {
+            policy.Requirements.Add(new AdminRequirement());
+        });
+    });
+
+builder.Services.AddSingleton<IAuthorizationHandler, AdminAuthorizationHandler>();
 
 var jwtSettings = new JwtSettings
 {
