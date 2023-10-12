@@ -1,14 +1,13 @@
 using CRM.TelegramMessage.Service.TelegramMessageManagement;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
+using RouteAttribute = Microsoft.AspNetCore.Components.RouteAttribute;
 
 namespace CRM.TelegramMessage.Service.Controllers
 {
 
   [Controller]
-  [Microsoft.AspNetCore.Components.Route("telegramMessages")]
-  [Authorize]
+  [Route("telegramMessages")]
   public class TelegramMessageController : ControllerBase
   {
     private readonly ITelegramMessageManagementService telegramMessageManagement;
@@ -16,14 +15,14 @@ namespace CRM.TelegramMessage.Service.Controllers
     {
       this.telegramMessageManagement = telegramMessageManagement;
     }
-    [HttpGet("GetAllTelegramMessages")]
+    [HttpGet("telegramMessages")]
     public async Task<IActionResult> GetAllTelegramMessagesAsync()
     {
       var telegramMessages = await telegramMessageManagement.GetAllTelegramMessagesAsync();
       return Ok(telegramMessages);
     }
-    [HttpGet("senderId")]
-    public async Task<IActionResult> GetAllTelegramMessagesBySenderIdAsync([FromBody] long senderId)
+    [HttpGet("telegramMessages/{senderId}")]
+    public async Task<IActionResult> GetAllTelegramMessagesBySenderIdAsync(long senderId)
     {
       var telegramMessages = await telegramMessageManagement.GetTelegramMessagesBySenderIdAsync(senderId);
       return Ok(telegramMessages);

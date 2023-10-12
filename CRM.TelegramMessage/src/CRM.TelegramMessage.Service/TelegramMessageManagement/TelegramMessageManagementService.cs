@@ -1,5 +1,7 @@
 using CRM.Common;
+using CRM.TelegramMessage.Service.DTOs;
 using CRM.TelegramMessage.Service.Entities;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace CRM.TelegramMessage.Service.TelegramMessageManagement
 {
@@ -10,16 +12,16 @@ namespace CRM.TelegramMessage.Service.TelegramMessageManagement
     {
       this.repository = repository;
     }
-    public async Task<IEnumerable<TelegramMessageEntity>> GetAllTelegramMessagesAsync()
+    public async Task<IEnumerable<TelegramMessageDto>> GetAllTelegramMessagesAsync()
     {
       var telegramMessages = await repository.GetAllAsync();
-      return telegramMessages;
+      return telegramMessages.Select(tm => tm.AsDto());
     }
 
-    public async Task<IEnumerable<TelegramMessageEntity>> GetTelegramMessagesBySenderIdAsync(long senderId)
+    public async Task<IEnumerable<TelegramMessageDto>> GetTelegramMessagesBySenderIdAsync(long senderId)
     {
       var telegramMessages = await repository.GetAllAsync(telegramMessage => telegramMessage.SenderId == senderId);
-      return telegramMessages;
+      return telegramMessages.Select(tm => tm.AsDto());
     }
   }
 

@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "XL863ZTpA5Y4vr2r4UIcnx7ssuDtEv2uvd80GCHijrM=",
+  "Source": "CRM.TelegramUser.Service",
+  "BasePath": "_content/CRM.TelegramUser.Service",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

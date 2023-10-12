@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "CFSy2EkvWGWu9ksYd9x6S714KTClIbF6dPVxdyeFzyaDsz3T9JRN+k+zx9OY0OFnRH8A7LGhjcY20ta85uui3Q==",
+  "dgSpecHash": "hLk3qvPxEX0xfWWkWZAJnqBCS/uJay5oiGGf5RujpMHzGvxsPc9amIt5cQSB3/Zz5YwdomdLQ1Uwpzs69evprA==",
   "success": true,
   "projectFilePath": "D:\\Developing\\CRM.Microservices\\CRM.TelegramMessage\\src\\CRM.TelegramMessage.Service\\CRM.TelegramMessage.Service.csproj",
   "expectedPackageFiles": [
