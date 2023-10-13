@@ -1,7 +1,7 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 
-namespace CRM.Account
+namespace CRM.Account.JWT
 {
   public class AdminAuthorizationHandler : AuthorizationHandler<AdminRequirement>
   {
