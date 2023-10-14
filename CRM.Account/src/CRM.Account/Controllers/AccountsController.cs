@@ -42,11 +42,11 @@ namespace CRM.Account.Controllers
     [HttpPost("login")]
     public async Task<IActionResult> LoginAsync([FromBody] LoginAccountDto loginModel)
     {
-      var accountDto = await _accountManagementService.LoginAsync(loginModel);
-      if (accountDto == null)
+      var token = await _accountManagementService.LoginAsync(loginModel);
+      if (token == null)
         return BadRequest(new { message = "Incorrect password or username" });
 
-      return Ok(new { accountDto, message = "Log In successfuly" });
+      return Ok(token);
     }
 
   }

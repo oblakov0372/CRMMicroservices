@@ -61,6 +61,19 @@ builder.Services.AddScoped<IAccountManagementService, AccountManagementService>(
 builder.Services.AddSingleton<IJwtAuthenticationManager, JwtAuthenticationManager>();
 
 
+#region CORS
+builder.Services.AddCors(options =>
+{
+    // this defines a CORS policy called "default"
+    options.AddPolicy("default", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+#endregion
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -71,7 +84,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseCors("default");
 
 app.MapControllers();
 
