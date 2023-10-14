@@ -42,11 +42,25 @@ builder.Services.AddMongo()
 builder.Services.AddScoped<ITelegramUserManagementService, TelegramUserManagementService>();
 builder.Services.AddHttpContextAccessor();
 
+#region CORS
+builder.Services.AddCors(options =>
+{
+    // this defines a CORS policy called "default"
+    options.AddPolicy("default", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+#endregion
+
 builder.Services.AddHttpClient<TelegramMessageClient>(client =>
 {
     client.BaseAddress = new Uri("https://localhost:7202");
 });
 var app = builder.Build();
+
 
 
 if (app.Environment.IsDevelopment())
@@ -58,7 +72,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
+app.UseCors("default");
 app.MapControllers();
 
 app.Run();

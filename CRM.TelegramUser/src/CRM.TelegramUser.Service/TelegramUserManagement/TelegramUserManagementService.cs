@@ -15,10 +15,31 @@ namespace CRM.TelegramUser.Service.TelegramUserManagement
       this.telegramMessageClient = telegramMessageClient;
     }
 
-    public async Task<IEnumerable<TelegramUserEntity>> GetAllTelegramUsersAsync()
+    public async Task<(IEnumerable<TelegramUserLiteDto>, int)> GetAllTelegramUsersAsync(TelegramUsersParameters parameters)
     {
-      var users = await repository.GetAllAsync();
-      return users;
+      var query = await repository.GetAllAsync();
+      if (!string.IsNullOrEmpty(parameters.SearchQuery))
+      {
+        var byUsername = query
+            .Where(u => u.TelegramUsername != null && u.TelegramUsername.ToLower().Contains(parameters.SearchQuery.ToLower()))
+            .ToList();
+
+        var byId = query
+            .Where(u => u.Id.ToString().Contains(parameters.SearchQuery))
+            .ToList();
+
+        query = byUsername.Concat(byId).ToList();
+      }
+
+      var totalCount = query.Count();
+      var totalPages = (int)Math.Ceiling((double)totalCount / parameters.PageSize);
+
+      var telegramUsers = query
+
+          .Skip((parameters.PageNumber - 1) * parameters.PageSize)
+          .Take(parameters.PageSize)
+          .ToList();
+      return (telegramUsers.Select(tu => tu.AsDto()), totalPages);
     }
     public async Task<bool> EditUserStatusAsync(Guid id, Status status)
     {

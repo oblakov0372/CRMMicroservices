@@ -38,6 +38,19 @@ builder.Services.AddScoped<ITelegramMessageManagementService, TelegramMessageMan
 builder.Services.AddMongo()
                 .AddMongoRepository<TelegramMessageEntity>("telegramMessages");
 
+#region CORS
+builder.Services.AddCors(options =>
+{
+    // this defines a CORS policy called "default"
+    options.AddPolicy("default", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+#endregion
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -49,7 +62,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
+app.UseCors("default");
 app.MapControllers();
 
 app.Run();

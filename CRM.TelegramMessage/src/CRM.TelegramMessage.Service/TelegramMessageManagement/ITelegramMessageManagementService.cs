@@ -5,7 +5,7 @@ namespace CRM.TelegramMessage.Service.TelegramMessageManagement
 {
   public interface ITelegramMessageManagementService
   {
-    Task<IEnumerable<TelegramMessageDto>> GetAllTelegramMessagesAsync();
-    Task<IEnumerable<TelegramMessageDto>> GetTelegramMessagesBySenderIdAsync(long senderId);
+    Task<(IEnumerable<TelegramMessageDto>, int)> GetAllTelegramMessagesAsync(TelegramMessagesParameters parameters);
+    Task<(IEnumerable<TelegramMessageDto>, int)> GetTelegramMessagesBySenderIdAsync(long senderId, TelegramMessagesParameters parameters);
   }
 }

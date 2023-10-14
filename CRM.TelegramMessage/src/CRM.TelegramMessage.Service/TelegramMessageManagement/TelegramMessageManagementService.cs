@@ -1,7 +1,6 @@
 using CRM.Common;
 using CRM.TelegramMessage.Service.DTOs;
 using CRM.TelegramMessage.Service.Entities;
-using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace CRM.TelegramMessage.Service.TelegramMessageManagement
 {
@@ -12,16 +11,52 @@ namespace CRM.TelegramMessage.Service.TelegramMessageManagement
     {
       this.repository = repository;
     }
-    public async Task<IEnumerable<TelegramMessageDto>> GetAllTelegramMessagesAsync()
+    public async Task<(IEnumerable<TelegramMessageDto>, int)> GetAllTelegramMessagesAsync(TelegramMessagesParameters parameters)
     {
-      var telegramMessages = await repository.GetAllAsync();
-      return telegramMessages.Select(tm => tm.AsDto());
+      var query = await repository.GetAllAsync();
+      if (!string.Equals(parameters.MessageType, "all", StringComparison.OrdinalIgnoreCase))
+      {
+        query = query.Where(m => m.Type == parameters.MessageType).ToList();
+      }
+
+      if (!string.IsNullOrEmpty(parameters.SearchQuery))
+      {
+        query = query.Where(m => m.Message.Contains(parameters.SearchQuery)).ToList();
+      }
+
+      var totalCount = query.Count();
+      var totalPages = (int)Math.Ceiling((double)totalCount / parameters.PageSize);
+
+      var telegramMessages = query
+          .OrderByDescending(m => m.Date)
+          .Skip((parameters.PageNumber - 1) * parameters.PageSize)
+          .Take(parameters.PageSize);
+
+      return (telegramMessages.Select(tm => tm.AsDto()), totalPages);
     }
 
-    public async Task<IEnumerable<TelegramMessageDto>> GetTelegramMessagesBySenderIdAsync(long senderId)
+    public async Task<(IEnumerable<TelegramMessageDto>, int)> GetTelegramMessagesBySenderIdAsync(long senderId, TelegramMessagesParameters parameters)
     {
-      var telegramMessages = await repository.GetAllAsync(telegramMessage => telegramMessage.SenderId == senderId);
-      return telegramMessages.Select(tm => tm.AsDto());
+      var query = await repository.GetAllAsync(telegramMessage => telegramMessage.SenderId == senderId);
+      if (!string.Equals(parameters.MessageType, "all", StringComparison.OrdinalIgnoreCase))
+      {
+        query = query.Where(m => m.Type == parameters.MessageType).ToList();
+      }
+
+      if (!string.IsNullOrEmpty(parameters.SearchQuery))
+      {
+        query = query.Where(m => m.Message.Contains(parameters.SearchQuery)).ToList();
+      }
+
+      var totalCount = query.Count();
+      var totalPages = (int)Math.Ceiling((double)totalCount / parameters.PageSize);
+
+      var telegramMessages = query
+          .OrderByDescending(m => m.Date)
+          .Skip((parameters.PageNumber - 1) * parameters.PageSize)
+          .Take(parameters.PageSize);
+
+      return (telegramMessages.Select(tm => tm.AsDto()), totalPages);
     }
   }
 

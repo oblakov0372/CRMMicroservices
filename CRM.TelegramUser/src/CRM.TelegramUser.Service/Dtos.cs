@@ -16,6 +16,13 @@ namespace CRM.TelegramUser.Service.Dtos
     string LinkToUserTelegram,
     string LinkToFirstMessage
   );
+  public record TelegramUserLiteDto
+  (
+    Guid Id,
+    long TelegramId,
+    string UserName,
+    Status Status
+  );
   public record TelegramMessageDto
     (
       Guid Id,

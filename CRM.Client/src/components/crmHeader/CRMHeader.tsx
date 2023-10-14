@@ -14,14 +14,14 @@ const CRMHeader = () => {
     {
       title: "Messages",
       description: "Messages History",
-      link: "/otc_crm/messages",
+      link: "/crm/messages",
     },
     {
       title: "Accounting",
       description: "Telegram Users",
-      link: "/otc_crm/accounting",
+      link: "/crm/accounting",
     },
-    { title: "My Deals", description: "Leads & Deal", link: "/otc_crm/deals" },
+    { title: "My Deals", description: "Leads & Deal", link: "/crm/deals" },
   ];
   return (
     <div className={styles.crm_header}>

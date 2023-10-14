@@ -17,10 +17,10 @@ namespace CRM.TelegramUser.Service.Controllers
       this.telegramUserManagementService = telegramUserManagementService;
     }
     [HttpGet]
-    public async Task<IActionResult> GetAllAsync()
+    public async Task<IActionResult> GetAllAsync([FromQuery] TelegramUsersParameters parameters)
     {
-      var telegramAccounts = await telegramUserManagementService.GetAllTelegramUsersAsync();
-      return Ok(telegramAccounts);
+      (IEnumerable<TelegramUserLiteDto> telegramAccounts, var totalPages) = await telegramUserManagementService.GetAllTelegramUsersAsync(parameters);
+      return Ok(new { telegramAccounts, totalPages });
     }
     [HttpPut("{id}")]
     public async Task<IActionResult> EditTelegramUserStatusAsync([FromBody] Status status, Guid id)

@@ -5,6 +5,9 @@ import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import LoginPage from "./pages/loginPage/LoginPage";
 import RegistrationPage from "./pages/registrationPage/RegistrationPage";
+import CRMPage from "./pages/crmPage/CRMPage";
+import CRMMessagePage from "./pages/crmMessagePage/CRMMessagePage";
+import CRMAccountingPage from "./pages/crmAccountingPage/CRMAccountingPage";
 
 function App() {
   return (
@@ -19,6 +22,15 @@ function App() {
                 path="/registration"
                 element={<RegistrationPage />}
               ></Route>
+              <Route path="/crm" element={<CRMPage />}>
+                <Route path="messages" element={<CRMMessagePage />} />
+                <Route path="accounting" element={<CRMAccountingPage />} />
+                <Route path="deals" element={<h1>My Deals</h1>} />
+                <Route
+                  path="accounting/:telegramAccountId"
+                  element={<h1>TelegramUser</h1>}
+                />
+              </Route>
             </Routes>
           </div>
         </div>

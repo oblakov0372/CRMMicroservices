@@ -36,7 +36,7 @@ const Header = () => {
       <div className={styles.navigation}>
         <ul className={styles.navigationUl}>
           <li>
-            <Link to={"/info"}>Info</Link>
+            <Link to={"/crm/messages"}>CRM</Link>
           </li>
         </ul>
       </div>
