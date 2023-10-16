@@ -7,6 +7,6 @@ namespace CRM.TelegramUser.Service.TelegramUserManagement
   {
     Task<(IEnumerable<TelegramUserLiteDto>, int)> GetAllTelegramUsersAsync(TelegramUsersParameters parameters);
     Task<bool> EditUserStatusAsync(Guid id, Status status);
-    Task<TelegramUserDto> GetDataForTelegramUserAsync(Guid Id);
+    Task<TelegramUserDto> GetDataForTelegramUserAsync(long Id);
   }
 }

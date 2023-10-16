@@ -4,11 +4,11 @@ import { anonymRequest } from "../../utils/Request";
 import LoadingSpinner from "../../components/loadingSpinner/LoadingSpinner";
 import CrmAccountingTable from "../../components/crmAccountingTable/CRMAccountingTable";
 import Pagination from "../../components/pagination/Pagination";
-import { TelegramAccountLite } from "../../types/TelegramAccountType";
+import { TelegramAccountLiteType } from "../../types/TelegramAccountType";
 
 const CRMAccountingPage = () => {
   const [telegramsAccounts, setTelegramAccounts] = useState<
-    TelegramAccountLite[]
+    TelegramAccountLiteType[]
   >([]);
   const [countPages, setCountPages] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);

@@ -14,8 +14,8 @@ namespace CRM.TelegramUser.Service.Clients
     public async Task<IEnumerable<TelegramMessageDto>> GetUserTelegramMessages(long telegramId)
     {
       var requestUri = $"/telegramMessages/{telegramId}";
-      IEnumerable<TelegramMessageDto> telegramMessages = await httpClient.GetFromJsonAsync<IEnumerable<TelegramMessageDto>>(requestUri);
-      return telegramMessages;
+      ResponseDataTelegramMessage data = await httpClient.GetFromJsonAsync<ResponseDataTelegramMessage>(requestUri);
+      return data.TelegramMessages;
     }
   }
 }

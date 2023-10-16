@@ -24,15 +24,16 @@ namespace CRM.TelegramUser.Service.Dtos
     Status Status
   );
   public record TelegramMessageDto
-    (
-      Guid Id,
-      long TelegramGroupId,
-      string TelegramGroupUsername,
-      long SenderId,
-      string SenderUsername,
-      string Message,
-      DateTime Date,
-      string LinkForMessage,
-      string Type
-    );
+  (
+    Guid Id,
+    long TelegramGroupId,
+    string TelegramGroupUsername,
+    long SenderId,
+    string SenderUsername,
+    string Message,
+    DateTime Date,
+    string LinkForMessage,
+    string Type
+  );
+  public record ResponseDataTelegramMessage(IEnumerable<TelegramMessageDto> TelegramMessages, int totalPages);
 }

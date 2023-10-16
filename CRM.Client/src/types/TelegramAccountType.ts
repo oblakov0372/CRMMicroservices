@@ -3,9 +3,9 @@ export enum Status {
   Reseller = "Reseller",
 }
 
-export interface TelegramAccountLite {
+export type TelegramAccountLiteType = {
   id: string;
   telegramId: number;
   telegramUsername: string | null;
   status: Status | null;
-}
+};

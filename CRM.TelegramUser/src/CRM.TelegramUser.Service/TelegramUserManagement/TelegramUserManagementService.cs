@@ -52,18 +52,18 @@ namespace CRM.TelegramUser.Service.TelegramUserManagement
       return true;
     }
 
-    public async Task<TelegramUserDto> GetDataForTelegramUserAsync(Guid Id)
+    public async Task<TelegramUserDto> GetDataForTelegramUserAsync(long telegramId)
     {
-      var existingUser = await repository.GetAsync(Id);
+      var existingUser = await repository.GetAsync(u => u.TelegramId == telegramId);
       if (existingUser == null)
         return null;
-      IEnumerable<TelegramMessageDto> telegramUserMessages = await telegramMessageClient.GetUserTelegramMessages(existingUser.TelegramId);
+      IEnumerable<TelegramMessageDto> telegramUserMessages = (await telegramMessageClient.GetUserTelegramMessages(telegramId));
       if (telegramUserMessages != null && telegramUserMessages.Any())
       {
         var telegramUserDto = new TelegramUserDto
         (
-          Id,
-          existingUser.TelegramId,
+          existingUser.Id,
+          telegramId,
           existingUser.TelegramUsername,
           existingUser.Status,
           telegramUserMessages.First().Date,

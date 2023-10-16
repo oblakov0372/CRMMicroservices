@@ -24,10 +24,10 @@ namespace CRM.Account.AccountManagement
 
     public async Task<AccountDto> RegisterAsync(CreateAccountDto registerModel)
     {
-      var alreadyRegisteredAcc = await repository.GetAsync(acc => acc.Email == registerModel.Email ||
+      var alreadyRegisteredAccount = await repository.GetAsync(acc => acc.Email == registerModel.Email ||
                                                            acc.UserName == registerModel.UserName);
 
-      if (alreadyRegisteredAcc != null)
+      if (alreadyRegisteredAccount != null)
         return null;
 
       var hashedPassword = HashPassword(registerModel.Password);

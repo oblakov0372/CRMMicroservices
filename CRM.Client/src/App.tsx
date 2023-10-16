@@ -8,6 +8,7 @@ import RegistrationPage from "./pages/registrationPage/RegistrationPage";
 import CRMPage from "./pages/crmPage/CRMPage";
 import CRMMessagePage from "./pages/crmMessagePage/CRMMessagePage";
 import CRMAccountingPage from "./pages/crmAccountingPage/CRMAccountingPage";
+import CRMTelegramUserPage from "./pages/crmTelegramUserPage/CrmTelegramUserPage";
 
 function App() {
   return (
@@ -28,7 +29,7 @@ function App() {
                 <Route path="deals" element={<h1>My Deals</h1>} />
                 <Route
                   path="accounting/:telegramAccountId"
-                  element={<h1>TelegramUser</h1>}
+                  element={<CRMTelegramUserPage />}
                 />
               </Route>
             </Routes>

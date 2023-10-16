@@ -29,10 +29,10 @@ namespace CRM.TelegramUser.Service.Controllers
 
       return Ok(editedAccount);
     }
-    [HttpGet("GetTelegramUserData/{Id}")]
-    public async Task<IActionResult> GetTelegramUserData([FromBody] Guid Id)
+    [HttpGet("GetTelegramUserData/{telegramId}")]
+    public async Task<IActionResult> GetTelegramUserData(long telegramId)
     {
-      TelegramUserDto userData = await telegramUserManagementService.GetDataForTelegramUserAsync(Id);
+      TelegramUserDto userData = await telegramUserManagementService.GetDataForTelegramUserAsync(telegramId);
       if (userData == null)
         return BadRequest();
 

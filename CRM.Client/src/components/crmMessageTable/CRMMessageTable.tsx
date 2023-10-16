@@ -52,7 +52,7 @@ const CRMMessageTable: React.FC<CRMMessageTableProperty> = ({
                 className="px-3 py-2 cursor-pointer"
                 style={{ maxWidth: "50px" }}
               >
-                <Link to={`/otc_crm/accounting/${telegramMessage.senderId}`}>
+                <Link to={`/crm/accounting/${telegramMessage.senderId}`}>
                   {telegramMessage.senderUsername && (
                     <span className="font-bold text-blue-500 ">
                       {telegramMessage.senderUsername}
