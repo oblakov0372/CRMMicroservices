@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { TelegramMessageType } from "../../types/TelegramMessageType";
 import { QueryParamsType } from "../../types/QueryParamsType";
-import { anonymRequest } from "../../utils/Request";
+import { anonymRequest, authenticatedRequest } from "../../utils/Request";
 import LoadingSpinner from "../../components/loadingSpinner/LoadingSpinner";
 import Pagination from "../../components/pagination/Pagination";
 import CRMMessageTable from "../../components/crmMessageTable/CRMMessageTable";
@@ -32,7 +32,7 @@ const CRMMessagePage = () => {
         queryParams.searchQuery = searchQuery;
       }
 
-      const response = await anonymRequest(
+      const response = await authenticatedRequest(
         "https://localhost:7202/telegramMessages",
         {
           queryParams,

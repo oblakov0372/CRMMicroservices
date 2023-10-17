@@ -9,6 +9,7 @@ import { TelegramMessageType } from "../../types/TelegramMessageType";
 import { TelegramAccountBaseType } from "../../types/TelegramAccountBaseType";
 import { QueryParamsType } from "../../types/QueryParamsType";
 import CRMMessageTable from "../../components/crmMessageTable/CRMMessageTable";
+import TelegramUserSections from "../../components/telegramUserSections/TelegramUserSections";
 
 const CRMTelegramUserPage = () => {
   const { telegramAccountId } = useParams();
@@ -28,6 +29,7 @@ const CRMTelegramUserPage = () => {
   const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout | null>(
     null
   );
+  const [activeSection, setActiveSection] = useState(0);
   const fetchData = async () => {
     setIsLoadingMessages(true);
     try {
@@ -49,7 +51,7 @@ const CRMTelegramUserPage = () => {
       );
 
       setTelegramMessages(response.data.telegramMessages);
-      setCountPages(response.data.countPages);
+      setCountPages(response.data.totalPages);
       setIsLoadingMessages(false);
     } catch (error) {
       console.error("Ошибка при получении данных:", error);
@@ -192,57 +194,63 @@ const CRMTelegramUserPage = () => {
             </div>
           )}
         </div>
-        <div className={styles.right_side}>
-          <div className="flex justify-between items-center bg-black px-7">
-            <input
-              className="bg-gray-600 px-3 py-1 rounded-sm"
-              type="text"
-              placeholder="Search..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <div className="bg-black block text-center py-4">
-              <label className="mr-2">ALL/WTS/WTB</label>
-              <select
-                className="bg-gray-600  px-4 py-1 rounded-sm"
-                value={messageType}
-                onChange={(e) => handleMessageTypeChange(e.target.value)}
-              >
-                <option value="all">All</option>
-                <option value="wts">WTS</option>
-                <option value="wtb">WTB</option>
-              </select>
-            </div>
-          </div>
-          {isLoadingMessages ? (
-            <div className="">
-              <LoadingSpinner />
-            </div>
-          ) : (
-            <>
-              <CRMMessageTable
-                telegramMessages={telegramMessages}
-                lyteVersion={true}
+        <div className="w-full">
+          <TelegramUserSections
+            setActiveSection={setActiveSection}
+            activeSection={activeSection}
+          />
+          <div>
+            <div className="flex justify-between items-center bg-black px-7">
+              <input
+                className="bg-gray-600 px-3 py-1 rounded-sm"
+                type="text"
+                placeholder="Search..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <div className="flex justify-between items-center">
-                {countPages > 1 && (
-                  <Pagination
-                    currentPage={currentPage - 1}
-                    countPages={countPages}
-                    onChangePage={setCurrentPage}
-                  />
-                )}
+              <div className="bg-black block text-center py-4">
+                <label className="mr-2">ALL/WTS/WTB</label>
                 <select
-                  className="bg-gray-600  px-4 py-1 rounded-sm "
-                  value={pageSize}
-                  onChange={(e) => handlePageSize(parseInt(e.target.value))}
+                  className="bg-gray-600  px-4 py-1 rounded-sm"
+                  value={messageType}
+                  onChange={(e) => handleMessageTypeChange(e.target.value)}
                 >
-                  <option value="5">5</option>
-                  <option value="10">10</option>
+                  <option value="all">All</option>
+                  <option value="wts">WTS</option>
+                  <option value="wtb">WTB</option>
                 </select>
               </div>
-            </>
-          )}
+            </div>
+            {isLoadingMessages ? (
+              <div className="">
+                <LoadingSpinner />
+              </div>
+            ) : (
+              <>
+                <CRMMessageTable
+                  telegramMessages={telegramMessages}
+                  lyteVersion={true}
+                />
+                <div className="flex justify-between items-center">
+                  {countPages > 1 && (
+                    <Pagination
+                      currentPage={currentPage - 1}
+                      countPages={countPages}
+                      onChangePage={setCurrentPage}
+                    />
+                  )}
+                  <select
+                    className="bg-gray-600  px-4 py-1 rounded-sm "
+                    value={pageSize}
+                    onChange={(e) => handlePageSize(parseInt(e.target.value))}
+                  >
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                  </select>
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </>

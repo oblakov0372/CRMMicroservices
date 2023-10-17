@@ -9,6 +9,7 @@ import CRMPage from "./pages/crmPage/CRMPage";
 import CRMMessagePage from "./pages/crmMessagePage/CRMMessagePage";
 import CRMAccountingPage from "./pages/crmAccountingPage/CRMAccountingPage";
 import CRMTelegramUserPage from "./pages/crmTelegramUserPage/CrmTelegramUserPage";
+import UserDealsPage from "./pages/userDealsPage/userDealsPage";
 
 function App() {
   return (
@@ -26,7 +27,7 @@ function App() {
               <Route path="/crm" element={<CRMPage />}>
                 <Route path="messages" element={<CRMMessagePage />} />
                 <Route path="accounting" element={<CRMAccountingPage />} />
-                <Route path="deals" element={<h1>My Deals</h1>} />
+                <Route path="deals" element={<UserDealsPage />} />
                 <Route
                   path="accounting/:telegramAccountId"
                   element={<CRMTelegramUserPage />}

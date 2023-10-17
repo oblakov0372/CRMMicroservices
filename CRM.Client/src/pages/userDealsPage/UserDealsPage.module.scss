@@ -1,0 +1,22 @@
+.dealStatusBox {
+  font-size: 1.2em;
+  font-weight: bold;
+  border: 1px solid #efff96;
+  padding: 10px 40px;
+  cursor: pointer;
+  transition: all ease-in-out 0.2s;
+  &:hover {
+    color: #000;
+    background-color: #dff560;
+  }
+  /* &:first-child {
+    border-top-left-radius: 10px;
+  }
+  &:last-child {
+    border-top-right-radius: 10px;
+  } */
+}
+.activeDealStatus {
+  color: #000;
+  background-color: #efff96;
+}
