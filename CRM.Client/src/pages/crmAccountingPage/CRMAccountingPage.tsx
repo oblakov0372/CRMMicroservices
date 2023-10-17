@@ -5,6 +5,7 @@ import LoadingSpinner from "../../components/loadingSpinner/LoadingSpinner";
 import CrmAccountingTable from "../../components/crmAccountingTable/CRMAccountingTable";
 import Pagination from "../../components/pagination/Pagination";
 import { TelegramAccountLiteType } from "../../types/TelegramAccountType";
+import { toErrorMessage } from "../../utils/ErrorHandler";
 
 const CRMAccountingPage = () => {
   const [telegramsAccounts, setTelegramAccounts] = useState<
@@ -14,6 +15,8 @@ const CRMAccountingPage = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(25);
   const [isLoading, setIsLoading] = useState<Boolean>(false);
+  const [isLoadingError, setIsLoadingError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout | null>(
     null
@@ -40,6 +43,8 @@ const CRMAccountingPage = () => {
       setCountPages(response.data.totalPages);
       setIsLoading(false);
     } catch (error) {
+      setErrorMessage(toErrorMessage(error));
+      setIsLoadingError(true);
       console.error("Ошибка при получении данных:", error);
       setIsLoading(false);
     }
@@ -69,7 +74,11 @@ const CRMAccountingPage = () => {
   }, [pageSize, currentPage]);
   return (
     <>
-      {isLoading ? (
+      {isLoadingError ? (
+        <h2 className="text-red-600 text-2xl text-center mt-16">
+          {errorMessage}
+        </h2>
+      ) : isLoading ? (
         <span className="block mt-10">
           <LoadingSpinner />
         </span>

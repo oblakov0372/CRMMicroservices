@@ -5,6 +5,7 @@ import { anonymRequest, authenticatedRequest } from "../../utils/Request";
 import LoadingSpinner from "../../components/loadingSpinner/LoadingSpinner";
 import Pagination from "../../components/pagination/Pagination";
 import CRMMessageTable from "../../components/crmMessageTable/CRMMessageTable";
+import { toErrorMessage } from "../../utils/ErrorHandler";
 
 const CRMMessagePage = () => {
   const [telegramMessages, setTelegramMessages] = useState<
@@ -13,6 +14,8 @@ const CRMMessagePage = () => {
   const [countPages, setCountPages] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isLoadingMessages, setIsLoadingMessages] = useState<Boolean>(true);
+  const [isLoadingError, setIsLoadingError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const [messageType, setMessageType] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [pageSize, setPageSize] = useState<number>(25);
@@ -21,6 +24,7 @@ const CRMMessagePage = () => {
   );
 
   const fetchData = async () => {
+    setIsLoadingError(false);
     try {
       const queryParams: QueryParamsType = {
         pageNumber: currentPage,
@@ -42,8 +46,10 @@ const CRMMessagePage = () => {
       setCountPages(response.data.totalPages);
       setIsLoadingMessages(false);
     } catch (error) {
+      setIsLoadingError(true);
       console.error("Ошибка при получении данных:", error);
       setIsLoadingMessages(false);
+      setErrorMessage(toErrorMessage(error));
     }
   };
 
@@ -79,7 +85,11 @@ const CRMMessagePage = () => {
 
   return (
     <>
-      {isLoadingMessages ? (
+      {isLoadingError ? (
+        <h2 className="text-red-600 text-2xl text-center mt-16">
+          {errorMessage}
+        </h2>
+      ) : isLoadingMessages ? (
         <span className="block mt-10">
           <LoadingSpinner />
         </span>
