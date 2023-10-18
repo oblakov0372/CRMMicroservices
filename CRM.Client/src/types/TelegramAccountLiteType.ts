@@ -1,11 +1,13 @@
 export enum Status {
-  Scamer = "Scamer",
-  Reseller = "Reseller",
+  "None",
+  "Scamer",
+  "Reseller",
+  "Inwork",
 }
 
 export type TelegramAccountLiteType = {
   id: string;
   telegramId: number;
-  telegramUsername: string | null;
+  userName: string | null;
   status: Status | null;
 };

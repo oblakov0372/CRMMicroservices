@@ -1,8 +1,8 @@
-import { Status } from "./TelegramAccountType";
+import { Status } from "./TelegramAccountLiteType";
 
 export type TelegramAccountBaseType = {
   id: number;
-  userName?: string | null;
+  username?: string | null;
   status?: Status | null;
   firstActivity: string;
   lastActivity: string;

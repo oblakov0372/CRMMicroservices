@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { TelegramMessageType } from "../../types/TelegramMessageType";
 import { QueryParamsType } from "../../types/QueryParamsType";
-import { anonymRequest, authenticatedRequest } from "../../utils/Request";
+import { authenticatedRequest } from "../../utils/Request";
 import LoadingSpinner from "../../components/loadingSpinner/LoadingSpinner";
 import Pagination from "../../components/pagination/Pagination";
 import CRMMessageTable from "../../components/crmMessageTable/CRMMessageTable";
 import { toErrorMessage } from "../../utils/ErrorHandler";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 const CRMMessagePage = () => {
   const [telegramMessages, setTelegramMessages] = useState<
@@ -21,6 +23,9 @@ const CRMMessagePage = () => {
   const [pageSize, setPageSize] = useState<number>(25);
   const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout | null>(
     null
+  );
+  const isLoggedIn = useSelector(
+    (state: RootState) => state.authSlice.isLoggedIn
   );
 
   const fetchData = async () => {
@@ -47,9 +52,12 @@ const CRMMessagePage = () => {
       setIsLoadingMessages(false);
     } catch (error) {
       setIsLoadingError(true);
-      console.error("Ошибка при получении данных:", error);
       setIsLoadingMessages(false);
-      setErrorMessage(toErrorMessage(error));
+      if (!isLoggedIn) {
+        setErrorMessage("You Need to authenticate!");
+      } else {
+        setErrorMessage(toErrorMessage(error));
+      }
     }
   };
 

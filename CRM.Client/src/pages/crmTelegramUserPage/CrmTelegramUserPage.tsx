@@ -11,6 +11,7 @@ import { QueryParamsType } from "../../types/QueryParamsType";
 import CRMMessageTable from "../../components/crmMessageTable/CRMMessageTable";
 import TelegramUserSections from "../../components/telegramUserSections/TelegramUserSections";
 import { toErrorMessage } from "../../utils/ErrorHandler";
+import MessageHistorySection from "../../components/messageHistorySection/MessageHistorySection";
 
 const CRMTelegramUserPage = () => {
   const { telegramAccountId } = useParams();
@@ -23,8 +24,8 @@ const CRMTelegramUserPage = () => {
   const [countPages, setCountPages] = useState<number>(0);
   const [pageSize, setPageSize] = useState<number>(5);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [isLoadingMessages, setIsLoadingMessages] = useState<Boolean>(true);
-  const [isLoadingUserData, setIsLoadingUserData] = useState<Boolean>(true);
+  const [isLoadingMessages, setIsLoadingMessages] = useState<boolean>(true);
+  const [isLoadingUserData, setIsLoadingUserData] = useState<boolean>(true);
   const [isLoadingError, setIsLoadingError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [messageType, setMessageType] = useState<string>("all");
@@ -32,6 +33,7 @@ const CRMTelegramUserPage = () => {
   const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout | null>(
     null
   );
+  //Deals,Message History
   const [activeSection, setActiveSection] = useState(0);
   const fetchData = async () => {
     setIsLoadingError(false);
@@ -101,7 +103,6 @@ const CRMTelegramUserPage = () => {
           `https://localhost:7014/telegramUsers/GetTelegramUserData/${telegramAccountId}`
         );
         setTelegramAccountData(response.data);
-        console.log(response.data);
         setIsLoadingUserData(false);
       } catch (error) {
         setErrorMessage(toErrorMessage(error));
@@ -125,9 +126,9 @@ const CRMTelegramUserPage = () => {
             ) : (
               <div className={styles.basic_user_information}>
                 <h1>
-                  {telegramAccountData?.userName === null
+                  {telegramAccountData?.username === null
                     ? ""
-                    : telegramAccountData?.userName}
+                    : telegramAccountData?.username}
                 </h1>
                 {telegramAccountData?.linkToUserTelegram ? (
                   <a
@@ -168,8 +169,8 @@ const CRMTelegramUserPage = () => {
                   <div className={styles.info}>
                     <span className={styles.title}>Telegram userName: </span>
                     <span className={styles.data}>
-                      {telegramAccountData?.userName
-                        ? telegramAccountData?.userName
+                      {telegramAccountData?.username
+                        ? telegramAccountData?.username
                         : "None"}
                     </span>
                   </div>
@@ -214,58 +215,21 @@ const CRMTelegramUserPage = () => {
               setActiveSection={setActiveSection}
               activeSection={activeSection}
             />
-            <div>
-              <div className="flex justify-between items-center bg-black px-7">
-                <input
-                  className="bg-gray-600 px-3 py-1 rounded-sm"
-                  type="text"
-                  placeholder="Search..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-                <div className="bg-black block text-center py-4">
-                  <label className="mr-2">ALL/WTS/WTB</label>
-                  <select
-                    className="bg-gray-600  px-4 py-1 rounded-sm"
-                    value={messageType}
-                    onChange={(e) => handleMessageTypeChange(e.target.value)}
-                  >
-                    <option value="all">All</option>
-                    <option value="wts">WTS</option>
-                    <option value="wtb">WTB</option>
-                  </select>
-                </div>
-              </div>
-              {isLoadingMessages ? (
-                <div className="">
-                  <LoadingSpinner />
-                </div>
-              ) : (
-                <>
-                  <CRMMessageTable
-                    telegramMessages={telegramMessages}
-                    lyteVersion={true}
-                  />
-                  <div className="flex justify-between items-center">
-                    {countPages > 1 && (
-                      <Pagination
-                        currentPage={currentPage - 1}
-                        countPages={countPages}
-                        onChangePage={setCurrentPage}
-                      />
-                    )}
-                    <select
-                      className="bg-gray-600  px-4 py-1 rounded-sm "
-                      value={pageSize}
-                      onChange={(e) => handlePageSize(parseInt(e.target.value))}
-                    >
-                      <option value="5">5</option>
-                      <option value="10">10</option>
-                    </select>
-                  </div>
-                </>
-              )}
-            </div>
+            {activeSection === 0 && (
+              <MessageHistorySection
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+                messageType={messageType}
+                handleMessageTypeChange={handleMessageTypeChange}
+                isLoadingMessages={isLoadingMessages}
+                telegramMessages={telegramMessages}
+                countPages={countPages}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                pageSize={pageSize}
+                handlePageSize={handlePageSize}
+              />
+            )}
           </div>
         </div>
       )}

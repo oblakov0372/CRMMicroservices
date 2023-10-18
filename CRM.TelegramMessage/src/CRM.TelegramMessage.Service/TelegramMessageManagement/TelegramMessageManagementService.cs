@@ -21,7 +21,7 @@ namespace CRM.TelegramMessage.Service.TelegramMessageManagement
 
       if (!string.IsNullOrEmpty(parameters.SearchQuery))
       {
-        query = query.Where(m => m.Message.Contains(parameters.SearchQuery)).ToList();
+        query = query.Where(m => m.Message.ToLower().Contains(parameters.SearchQuery.ToLower())).ToList();
       }
 
       var totalCount = query.Count();
@@ -45,7 +45,7 @@ namespace CRM.TelegramMessage.Service.TelegramMessageManagement
 
       if (!string.IsNullOrEmpty(parameters.SearchQuery))
       {
-        query = query.Where(m => m.Message.Contains(parameters.SearchQuery)).ToList();
+        query = query.Where(m => m.Message.ToLower().Contains(parameters.SearchQuery.ToLower())).ToList();
       }
 
       var totalCount = query.Count();

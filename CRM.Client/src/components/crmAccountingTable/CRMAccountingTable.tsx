@@ -1,9 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { TelegramAccountLite } from "../../types/TelegramAccountType";
+import {
+  Status,
+  TelegramAccountLiteType,
+} from "../../types/TelegramAccountLiteType";
+import { getStatusString } from "../../utils/Utils";
 
 type CrmTelegramAccountingTableProperty = {
-  telegramAccounting: TelegramAccountLite[];
+  telegramAccounting: TelegramAccountLiteType[];
 };
 
 const CrmAccountingTable: React.FC<CrmTelegramAccountingTableProperty> = ({
@@ -19,7 +23,7 @@ const CrmAccountingTable: React.FC<CrmTelegramAccountingTableProperty> = ({
         </tr>
       </thead>
       <tbody>
-        {telegramAccounting.map((telegramAccount: TelegramAccountLite) => (
+        {telegramAccounting.map((telegramAccount: TelegramAccountLiteType) => (
           <tr key={telegramAccount.id} className="border-b border-gray-400">
             <td className="font-extrabold px-3 py-2 cursor-pointer ">
               <Link
@@ -30,14 +34,10 @@ const CrmAccountingTable: React.FC<CrmTelegramAccountingTableProperty> = ({
               </Link>
             </td>
             <td className="font-semibold px-3 py-2 ">
-              {telegramAccount.telegramUsername !== null
-                ? telegramAccount.telegramUsername
-                : "None"}
+              {telegramAccount.userName ? telegramAccount.userName : "None"}
             </td>
             <td className="font-extrabold px-3 py-2">
-              {telegramAccount.status !== null
-                ? telegramAccount.status
-                : "None"}
+              {getStatusString(telegramAccount.status)}
             </td>
           </tr>
         ))}

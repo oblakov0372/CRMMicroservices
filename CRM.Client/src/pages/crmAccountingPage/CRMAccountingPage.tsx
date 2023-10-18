@@ -4,7 +4,7 @@ import { anonymRequest } from "../../utils/Request";
 import LoadingSpinner from "../../components/loadingSpinner/LoadingSpinner";
 import CrmAccountingTable from "../../components/crmAccountingTable/CRMAccountingTable";
 import Pagination from "../../components/pagination/Pagination";
-import { TelegramAccountLiteType } from "../../types/TelegramAccountType";
+import { TelegramAccountLiteType } from "../../types/TelegramAccountLiteType";
 import { toErrorMessage } from "../../utils/ErrorHandler";
 
 const CRMAccountingPage = () => {
@@ -40,6 +40,7 @@ const CRMAccountingPage = () => {
         }
       );
       setTelegramAccounts(response.data.telegramAccounts);
+
       setCountPages(response.data.totalPages);
       setIsLoading(false);
     } catch (error) {
