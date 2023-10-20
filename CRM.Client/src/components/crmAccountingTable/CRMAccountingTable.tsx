@@ -1,9 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {
-  Status,
-  TelegramAccountLiteType,
-} from "../../types/TelegramAccountLiteType";
+import { TelegramAccountLiteType } from "../../types/TelegramAccountLiteType";
 import { getStatusString } from "../../utils/Utils";
 
 type CrmTelegramAccountingTableProperty = {

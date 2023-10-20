@@ -3,4 +3,5 @@ export type QueryParamsType = {
   pageSize: number;
   messageType?: string;
   searchQuery?: string;
+  dealStatus?: number;
 };

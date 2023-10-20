@@ -41,9 +41,9 @@ namespace CRM.TelegramUser.Service.TelegramUserManagement
           .ToList();
       return (telegramUsers.Select(tu => tu.AsDto()), totalPages);
     }
-    public async Task<bool> EditUserStatusAsync(Guid id, Status status)
+    public async Task<bool> EditUserStatusAsync(long telegramUserId, Status status)
     {
-      var existingUser = await repository.GetAsync(id);
+      var existingUser = await repository.GetAsync(user => user.TelegramId == telegramUserId);
 
       if (existingUser == null)
         return false;

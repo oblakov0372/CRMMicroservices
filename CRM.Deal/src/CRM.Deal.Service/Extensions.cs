@@ -5,9 +5,9 @@ namespace CRM.Deal
 {
   public static class Extensions
   {
-    public static DealDto AsDto(this DealEntity dealEntity)
+    public static DealDto AsDto(this DealEntity dealEntity, string createdByUserName)
     {
-      return new DealDto(dealEntity.Id, dealEntity.Status, dealEntity.CreatedById, dealEntity.TelegramUserId, dealEntity.CreatedDate);
+      return new DealDto(dealEntity.Id, dealEntity.Status, dealEntity.CreatedById, createdByUserName, dealEntity.TelegramUserId, dealEntity.CreatedDate);
     }
   }
 }

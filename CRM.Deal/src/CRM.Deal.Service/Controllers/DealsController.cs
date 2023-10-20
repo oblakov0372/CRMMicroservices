@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using CRM.Deal.Service.DealManagement;
 using CRM.Deal.Service.Dtos;
+using CRM.TelegramUser.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,17 +23,19 @@ namespace CRM.Deal.Service.Controllers
     }
     [Authorize(Roles = "Admin")]
     [HttpGet]
-    public async Task<IActionResult> GetDealsAsync()
+    public async Task<IActionResult> GetDealsAsync([FromQuery] DealParameters parameters)
     {
-      var deals = await dealManagementService.GetAllDealsAsync();
-      return Ok(deals);
+      (IEnumerable<DealDto> deals, int totalPages) = await dealManagementService.GetAllDealsAsync(parameters);
+      return Ok(new { deals, totalPages });
     }
 
-    [HttpGet("GetDealsByUserId/{userId}")]
-    public async Task<IActionResult> GetDealByUserId(Guid userId)
+    [HttpGet("GetDealsByLoggedUser")]
+    public async Task<IActionResult> GetDealsByLoggedUser([FromQuery] DealParameters parameters)
     {
-      var deals = await dealManagementService.GetAllDealsByUserIdAsync(userId);
-      return Ok(deals);
+      var userId = GetUserId();
+      (IEnumerable<DealDto> deals, int totalPages) = await dealManagementService.GetAllDealsByUserIdAsync(userId, parameters);
+      return Ok(new { deals, totalPages });
+
     }
 
     [HttpPost]

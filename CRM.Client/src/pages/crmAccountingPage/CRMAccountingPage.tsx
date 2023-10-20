@@ -63,16 +63,16 @@ const CRMAccountingPage = () => {
     setSearchTimeout(newSearchTimeout);
   }, [searchQuery]);
 
-  const handlePageSize = (size: number) => {
-    setPageSize(size);
-    setCurrentPage(1);
-  };
-
   useEffect(() => {
     setIsLoading(true);
     window.scrollTo(0, 0);
     fetchData();
   }, [pageSize, currentPage]);
+
+  const handlePageSize = (size: number) => {
+    setPageSize(size);
+    setCurrentPage(1);
+  };
   return (
     <>
       {isLoadingError ? (

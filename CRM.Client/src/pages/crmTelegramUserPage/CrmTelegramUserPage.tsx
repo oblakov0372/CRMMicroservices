@@ -1,17 +1,16 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { anonymRequest } from "../../utils/Request";
 import styles from "./CrmTelegramUserPage.module.scss";
 import { formatDate } from "../../utils/Utils";
 import LoadingSpinner from "../../components/loadingSpinner/LoadingSpinner";
-import Pagination from "../../components/pagination/Pagination";
 import { TelegramMessageType } from "../../types/TelegramMessageType";
 import { TelegramAccountBaseType } from "../../types/TelegramAccountBaseType";
 import { QueryParamsType } from "../../types/QueryParamsType";
-import CRMMessageTable from "../../components/crmMessageTable/CRMMessageTable";
 import TelegramUserSections from "../../components/telegramUserSections/TelegramUserSections";
 import { toErrorMessage } from "../../utils/ErrorHandler";
 import MessageHistorySection from "../../components/messageHistorySection/MessageHistorySection";
+import { Status } from "../../types/TelegramAccountLiteType";
 
 const CRMTelegramUserPage = () => {
   const { telegramAccountId } = useParams();
@@ -35,6 +34,33 @@ const CRMTelegramUserPage = () => {
   );
   //Deals,Message History
   const [activeSection, setActiveSection] = useState(0);
+
+  // Deal form state
+  const [newDeal, setNewDeal] = useState({
+    status: Status.None,
+    telegramUserId: telegramAccountId,
+  });
+  const [isCreatingDeal, setIsCreatingDeal] = useState(false);
+
+  // Handle input changes
+  const handleDealChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setNewDeal({ ...newDeal, [name]: value });
+  };
+
+  // Handle deal creation
+  const createDeal = async () => {
+    setIsCreatingDeal(true);
+
+    // Send a request to create the deal using 'newDeal' data
+    console.log(newDeal);
+    // After the request is complete, reset the form and update the UI
+    setIsCreatingDeal(false);
+    setNewDeal({ status: Status.None, telegramUserId: telegramAccountId });
+  };
+
   const fetchData = async () => {
     setIsLoadingError(false);
     setIsLoadingMessages(true);
@@ -126,15 +152,19 @@ const CRMTelegramUserPage = () => {
             ) : (
               <div className={styles.basic_user_information}>
                 <h1>
-                  {telegramAccountData?.username === null
+                  {telegramAccountData?.userName === null
                     ? ""
-                    : telegramAccountData?.username}
+                    : telegramAccountData?.userName}
                 </h1>
                 {telegramAccountData?.linkToUserTelegram ? (
                   <a
                     target="_blank"
                     className={styles.to_telegram}
-                    href={telegramAccountData?.linkToUserTelegram}
+                    href={
+                      telegramAccountData.linkToUserTelegram === "https://t.me/"
+                        ? telegramAccountData.linkToFirstMessage
+                        : telegramAccountData.linkToUserTelegram
+                    }
                   >
                     Go to Telegram
                   </a>
@@ -163,14 +193,14 @@ const CRMTelegramUserPage = () => {
                   <div className={styles.info}>
                     <span className={styles.title}>Telegram User Id: </span>
                     <span className={styles.data}>
-                      {telegramAccountData?.id}
+                      {telegramAccountData?.telegramId}
                     </span>
                   </div>
                   <div className={styles.info}>
                     <span className={styles.title}>Telegram userName: </span>
                     <span className={styles.data}>
-                      {telegramAccountData?.username
-                        ? telegramAccountData?.username
+                      {telegramAccountData?.userName
+                        ? telegramAccountData?.userName
                         : "None"}
                     </span>
                   </div>
@@ -229,6 +259,43 @@ const CRMTelegramUserPage = () => {
                 pageSize={pageSize}
                 handlePageSize={handlePageSize}
               />
+            )}
+            {activeSection === 1 && (
+              <div>
+                <h1 className="text-center text-2xl text-white mb-5">
+                  Set user status
+                </h1>
+                <div className="p-4 border border-gray-700 rounded-md bg-gray-900">
+                  <div className="mb-4">
+                    <label
+                      htmlFor="status"
+                      className="block text-sm font-medium text-white mb-2"
+                    >
+                      Status
+                    </label>
+                    <select
+                      id="status"
+                      name="status"
+                      value={newDeal.status}
+                      onChange={handleDealChange}
+                      className="mt-1 p-2 border border-gray-500 rounded-md w-full bg-gray-800 text-white"
+                    >
+                      <option value={Status.None}>None</option>
+                      <option value={Status.Scamer}>Scamer</option>
+                      <option value={Status.Reseller}>Reseller</option>
+                      <option value={Status.Inwork}>In work</option>
+                    </select>
+                  </div>
+                  <div className="mb-4"></div>
+                  <button
+                    onClick={createDeal}
+                    className="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600"
+                    disabled={isCreatingDeal}
+                  >
+                    {isCreatingDeal ? "Creating Deal..." : "Create Deal"}
+                  </button>
+                </div>
+              </div>
             )}
           </div>
         </div>

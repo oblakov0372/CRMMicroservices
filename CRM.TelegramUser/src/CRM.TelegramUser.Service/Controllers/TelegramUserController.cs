@@ -23,9 +23,9 @@ namespace CRM.TelegramUser.Service.Controllers
       return Ok(new { telegramAccounts, totalPages });
     }
     [HttpPut("{id}")]
-    public async Task<IActionResult> EditTelegramUserStatusAsync([FromBody] Status status, Guid id)
+    public async Task<IActionResult> EditTelegramUserStatusAsync([FromBody] Status status, long telegramUserId)
     {
-      var editedAccount = await telegramUserManagementService.EditUserStatusAsync(id, status);
+      var editedAccount = await telegramUserManagementService.EditUserStatusAsync(telegramUserId, status);
 
       return Ok(editedAccount);
     }

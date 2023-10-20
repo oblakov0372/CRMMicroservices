@@ -6,6 +6,7 @@ namespace CRM.Account.AccountManagement
   public interface IAccountManagementService
   {
     Task<IEnumerable<AccountDto>> GetAllAsync();
+    Task<AccountDto> GetByIdAsync(Guid id);
     Task<AccountDto> EditStatusAsync(Guid id, Role role);
     Task<AccountDto> RegisterAsync(CreateAccountDto createModel);
     Task<string> LoginAsync(LoginAccountDto loginModel);

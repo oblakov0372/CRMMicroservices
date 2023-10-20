@@ -1,3 +1,4 @@
+import { DealStatus } from "../types/DealType";
 import { Status } from "../types/TelegramAccountLiteType";
 
 export const formatDate = (dateString: string) => {
@@ -25,6 +26,27 @@ export const getStatusString = (status: Status | null): string => {
       return "Reseller";
     case Status.Inwork:
       return "Inwork";
+    default:
+      return "Unknown"; // Обработка неизвестных значений, если нужно
+  }
+};
+
+export const getDealStatusString = (status: DealStatus | null): string => {
+  switch (status) {
+    case DealStatus.None:
+      return "None";
+    case DealStatus.InProgress:
+      return "In Progress";
+    case DealStatus.Pending:
+      return "Pending";
+    case DealStatus.LostDeal:
+      return "Lost Deal";
+    case DealStatus.WonDeal:
+      return "Won Deal";
+    case DealStatus.Cart:
+      return "Cart";
+    case DealStatus.Scamer:
+      return "Scamer";
     default:
       return "Unknown"; // Обработка неизвестных значений, если нужно
   }

@@ -15,12 +15,23 @@ namespace CRM.Account.Controllers
     {
       _accountManagementService = accountManagementService;
     }
-    [Authorize]
     [HttpGet]
     public async Task<IEnumerable<AccountDto>> GetAllAsync()
     {
       return await _accountManagementService.GetAllAsync();
     }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetByIdAsync(Guid id)
+    {
+      var accountData = await _accountManagementService.GetByIdAsync(id);
+      if (accountData != null)
+        return Ok(accountData);
+
+      return BadRequest();
+    }
+
+
     [Authorize(Roles = "Admin")]
     [HttpPut("{id}")]
     public async Task<IActionResult> EditStatusAsync([FromBody] Role role, Guid id)

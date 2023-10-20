@@ -64,6 +64,12 @@ namespace CRM.Account.AccountManagement
                      .Select(acc => acc.AsDto());
       return accounts;
     }
+    public async Task<AccountDto> GetByIdAsync(Guid id)
+    {
+      var account = (await repository.GetAsync(id)).AsDto();
+
+      return account;
+    }
 
     public async Task<AccountDto> EditStatusAsync(Guid id, Role role)
     {
