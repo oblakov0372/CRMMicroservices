@@ -1,3 +1,5 @@
+using CRM.Common;
+
 namespace CRM.TelegramMessage.Service
 {
   public class TelegramMessagesParameters : QueryStringParameters

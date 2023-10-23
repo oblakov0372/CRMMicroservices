@@ -8,6 +8,7 @@ namespace CRM.TelegramMessage.Service.Controllers
 {
   [Controller]
   [Route("telegramMessages")]
+  [Authorize]
   public class TelegramMessageController : ControllerBase
   {
     private readonly ITelegramMessageManagementService telegramMessageManagement;
@@ -15,7 +16,6 @@ namespace CRM.TelegramMessage.Service.Controllers
     {
       this.telegramMessageManagement = telegramMessageManagement;
     }
-    [Authorize]
     [HttpGet("telegramMessages")]
     public async Task<IActionResult> GetAllTelegramMessagesAsync([FromQuery] TelegramMessagesParameters parameters)
     {

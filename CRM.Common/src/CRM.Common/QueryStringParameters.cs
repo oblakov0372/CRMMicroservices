@@ -1,4 +1,4 @@
-namespace CRM.TelegramMessage.Service
+namespace CRM.Common
 {
   public abstract class QueryStringParameters
   {

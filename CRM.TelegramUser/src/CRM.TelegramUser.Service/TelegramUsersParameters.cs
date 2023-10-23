@@ -1,4 +1,4 @@
-using CRM.TelegramMessage.Service;
+using CRM.Common;
 
 namespace CRM.TelegramUser.Service
 {

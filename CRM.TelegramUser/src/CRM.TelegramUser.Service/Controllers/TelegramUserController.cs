@@ -9,6 +9,7 @@ namespace CRM.TelegramUser.Service.Controllers
 {
   [Controller]
   [Route("telegramUsers")]
+  [Authorize]
   public class TelegramUserController : ControllerBase
   {
     private readonly ITelegramUserManagementService telegramUserManagementService;

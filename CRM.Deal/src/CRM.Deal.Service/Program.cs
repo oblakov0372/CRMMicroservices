@@ -1,5 +1,6 @@
 using System.Text;
 using CRM.Common.MongoDb;
+using CRM.Common.Authentication;
 using CRM.Deal;
 using CRM.Deal.Service;
 using CRM.Deal.Service.Client;
@@ -16,34 +17,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(options =>
-    {
-        options.SaveToken = true;
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
-            ValidAudience = builder.Configuration["JwtSettings:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"]))
-        };
-    });
-
-builder.Services.AddAuthorization(options =>
-    {
-        options.AddPolicy("AdminPolicy", policy =>
-        {
-            policy.Requirements.Add(new AdminRequirement());
-        });
-    });
+AuthenticationHelper.ConfigureAuthentication(builder.Services, builder.Configuration);
+AuthenticationHelper.ConfigureAuthorization(builder.Services);
 
 builder.Services.AddSingleton<IAuthorizationHandler, AdminAuthorizationHandler>();
 

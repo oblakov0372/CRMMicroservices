@@ -1,5 +1,5 @@
+using CRM.Common;
 using CRM.Deal.Service;
-using CRM.TelegramMessage.Service;
 
 namespace CRM.TelegramUser.Service
 {

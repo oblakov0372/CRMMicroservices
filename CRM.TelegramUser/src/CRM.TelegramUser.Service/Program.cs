@@ -1,10 +1,8 @@
-using System.Text;
+using CRM.Common.Authentication;
 using CRM.Common.MongoDb;
 using CRM.TelegramUser.Service.Clients;
 using CRM.TelegramUser.Service.Entities;
 using CRM.TelegramUser.Service.TelegramUserManagement;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,26 +12,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(options =>
-    {
-        options.SaveToken = true;
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
-            ValidAudience = builder.Configuration["JwtSettings:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"]))
-        };
-    });
+AuthenticationHelper.ConfigureAuthentication(builder.Services, builder.Configuration);
+
 builder.Services.AddAuthorization();
 
 builder.Services.AddMongo()
@@ -45,7 +25,6 @@ builder.Services.AddHttpContextAccessor();
 #region CORS
 builder.Services.AddCors(options =>
 {
-    // this defines a CORS policy called "default"
     options.AddPolicy("default", policy =>
     {
         policy.WithOrigins("http://localhost:5173")
