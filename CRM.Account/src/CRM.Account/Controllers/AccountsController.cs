@@ -33,7 +33,6 @@ namespace CRM.Account.Controllers
       return BadRequest();
     }
 
-
     [HttpPut("{id}")]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> EditStatusAsync([FromBody] Role role, Guid id)
@@ -61,6 +60,5 @@ namespace CRM.Account.Controllers
 
       return Ok(token);
     }
-
   }
 }

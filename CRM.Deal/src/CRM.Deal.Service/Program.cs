@@ -1,13 +1,10 @@
-using System.Text;
 using CRM.Common.MongoDb;
 using CRM.Common.Authentication;
 using CRM.Deal;
 using CRM.Deal.Service;
-using CRM.Deal.Service.Client;
 using CRM.Deal.Service.DealManagement;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.IdentityModel.Tokens;
+using CRM.Deal.HttpHandler;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,12 +19,16 @@ AuthenticationHelper.ConfigureAuthorization(builder.Services);
 
 builder.Services.AddSingleton<IAuthorizationHandler, AdminAuthorizationHandler>();
 
-builder.Services.AddHttpClient<AccountClient>(client =>
-{
-    client.BaseAddress = new Uri("https://localhost:7205");
-});
+// builder.Services.AddHttpClient<AccountClient>(client =>
+// {
+//     client.BaseAddress = new Uri("https://localhost:7205");
+// });
+builder.Services.AddTransient<HttpTrackerHandler>();
 
-#region CORS
+builder.Services
+    .AddHttpClient("auth")
+    .AddHttpMessageHandler<HttpTrackerHandler>();
+
 builder.Services.AddCors(options =>
 {
     // this defines a CORS policy called "default"
@@ -38,7 +39,8 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod();
     });
 });
-#endregion
+
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddMongo()
                 .AddMongoRepository<DealEntity>("deals");

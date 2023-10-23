@@ -8,11 +8,13 @@ namespace CRM.Deal.Service.DealManagement
   public class DealManagementService : IDealManagementService
   {
     private readonly IRepository<DealEntity> repository;
-    private readonly AccountClient accountHttpClient;
-    public DealManagementService(IRepository<DealEntity> repository, AccountClient accountHttpClient)
+    private readonly AccountClient _client;
+    private readonly IHttpClientFactory _httpClientFactory;
+    public DealManagementService(IRepository<DealEntity> repository, IHttpClientFactory httpClientFactory)
     {
-      this.accountHttpClient = accountHttpClient;
       this.repository = repository;
+      _httpClientFactory = httpClientFactory;
+      _client = new AccountClient("https://localhost:7205", _httpClientFactory.CreateClient("auth"));
     }
     public async Task<(IEnumerable<DealDto>, int)> GetAllDealsAsync(DealParameters parameters)
     {
@@ -36,7 +38,7 @@ namespace CRM.Deal.Service.DealManagement
           .Skip((parameters.PageNumber - 1) * parameters.PageSize)
           .Take(parameters.PageSize);
 
-      var accounts = await accountHttpClient.GetAccountsAsync();
+      var accounts = await _client.AccountsAllAsync();
       var dealsDto = deals.Select(deal =>
       {
         var createdByAccount = accounts.Single(account => account.Id == deal.CreatedById);
@@ -68,7 +70,8 @@ namespace CRM.Deal.Service.DealManagement
           .Skip((parameters.PageNumber - 1) * parameters.PageSize)
           .Take(parameters.PageSize);
 
-      var account = await accountHttpClient.GetAccountAsync(creatorId);
+      AccountDto account = await _client.AccountsGETAsync(creatorId);
+
       var dealsDto = deals.Select(deal => deal.AsDto(account.UserName));
 
       return (dealsDto, totalPages);
@@ -76,7 +79,7 @@ namespace CRM.Deal.Service.DealManagement
 
     public async Task<DealDto> CreateDealAsync(CreateDealModel model, Guid creatorId)
     {
-      var account = await accountHttpClient.GetAccountAsync(creatorId);
+      AccountDto account = await _client.AccountsGETAsync(creatorId);
       DealEntity dealEntity = new DealEntity()
       {
         Id = Guid.NewGuid(),

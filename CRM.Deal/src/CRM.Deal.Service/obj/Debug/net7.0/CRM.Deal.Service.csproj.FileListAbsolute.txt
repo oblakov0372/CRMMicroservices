@@ -54,3 +54,4 @@ D:\Developing\CRM.Microservices\CRM.Deal\src\CRM.Deal.Service\obj\Debug\net7.0\C
 D:\Developing\CRM.Microservices\CRM.Deal\src\CRM.Deal.Service\obj\Debug\net7.0\CRM.Deal.Service.genruntimeconfig.cache
 D:\Developing\CRM.Microservices\CRM.Deal\src\CRM.Deal.Service\obj\Debug\net7.0\ref\CRM.Deal.Service.dll
 D:\Developing\CRM.Microservices\CRM.Deal\src\CRM.Deal.Service\bin\Debug\net7.0\System.Security.Permissions.dll
+D:\Developing\CRM.Microservices\CRM.Deal\src\CRM.Deal.Service\bin\Debug\net7.0\Newtonsoft.Json.dll
