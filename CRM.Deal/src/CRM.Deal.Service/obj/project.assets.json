@@ -31,7 +31,7 @@
           }
         }
       },
-      "CRM.Common/1.1.0": {
+      "CRM.Common/1.2.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.AspNetCore.Authentication": "2.2.0",
@@ -1140,13 +1140,13 @@
         "tools/uninstall.ps1"
       ]
     },
-    "CRM.Common/1.1.0": {
-      "sha512": "JVG7LozRj/W4t6ge+BUGmQ3wy9oDixPuqMOd0HSzPk7H56a2NOpcF9Qkh0hebIXDTDouYJgXyxV+uWTx/Dy6ig==",
+    "CRM.Common/1.2.0": {
+      "sha512": "eYZuzEq1/9ThkHfdlcpDK/pMvtDWOpwiHqFjrz+M7JCG9OzXxaXZWbzjvZD/N4LjliJq2sO1XrP5nVREeeXypQ==",
       "type": "package",
-      "path": "crm.common/1.1.0",
+      "path": "crm.common/1.2.0",
       "files": [
         ".nupkg.metadata",
-        "crm.common.1.1.0.nupkg.sha512",
+        "crm.common.1.2.0.nupkg.sha512",
         "crm.common.nuspec",
         "lib/net7.0/CRM.Common.dll"
       ]
@@ -2819,7 +2819,7 @@
   },
   "projectFileDependencyGroups": {
     "net7.0": [
-      "CRM.Common >= 1.1.0",
+      "CRM.Common >= 1.2.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 7.0.12",
       "Microsoft.AspNetCore.OpenApi >= 7.0.10",
       "Newtonsoft.Json >= 13.0.3",
@@ -2868,7 +2868,7 @@
         "dependencies": {
           "CRM.Common": {
             "target": "Package",
-            "version": "[1.1.0, )"
+            "version": "[1.2.0, )"
           },
           "Microsoft.AspNetCore.Authentication.JwtBearer": {
             "target": "Package",

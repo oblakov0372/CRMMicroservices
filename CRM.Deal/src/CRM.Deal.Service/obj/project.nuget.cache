@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "kdZD5QPKMMP2ltBcrbDD1pQ1TloJ2bsAugExKB4p01Y3GMqXA38RSYxKPucB/SvpsFH3umvWG/XbtJEr73BvLA==",
+  "dgSpecHash": "pAQ/fR/yUXCo+20aayWTOwe0aFmIUygW5yduZAy7cdiIHGOEzE4Yba0X8eaEpWjBKU73WQRQn/QG8oqYcRAdag==",
   "success": true,
   "projectFilePath": "D:\\Developing\\CRM.Microservices\\CRM.Deal\\src\\CRM.Deal.Service\\CRM.Deal.Service.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\demao\\.nuget\\packages\\awssdk.core\\3.7.100.14\\awssdk.core.3.7.100.14.nupkg.sha512",
     "C:\\Users\\demao\\.nuget\\packages\\awssdk.securitytoken\\3.7.100.14\\awssdk.securitytoken.3.7.100.14.nupkg.sha512",
-    "C:\\Users\\demao\\.nuget\\packages\\crm.common\\1.1.0\\crm.common.1.1.0.nupkg.sha512",
+    "C:\\Users\\demao\\.nuget\\packages\\crm.common\\1.2.0\\crm.common.1.2.0.nupkg.sha512",
     "C:\\Users\\demao\\.nuget\\packages\\dnsclient\\1.6.1\\dnsclient.1.6.1.nupkg.sha512",
     "C:\\Users\\demao\\.nuget\\packages\\microsoft.aspnetcore.authentication\\2.2.0\\microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",
     "C:\\Users\\demao\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",

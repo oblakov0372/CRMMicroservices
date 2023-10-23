@@ -1,5 +1,6 @@
+using Microsoft.AspNetCore.Http;
 
-namespace CRM.Deal.HttpHandler
+namespace CRM.Common.HttpHandler
 {
   public class HttpTrackerHandler : DelegatingHandler
   {

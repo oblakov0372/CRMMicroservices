@@ -4,7 +4,7 @@ using CRM.Deal;
 using CRM.Deal.Service;
 using CRM.Deal.Service.DealManagement;
 using Microsoft.AspNetCore.Authorization;
-using CRM.Deal.HttpHandler;
+using CRM.Common.HttpHandler;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,10 +19,6 @@ AuthenticationHelper.ConfigureAuthorization(builder.Services);
 
 builder.Services.AddSingleton<IAuthorizationHandler, AdminAuthorizationHandler>();
 
-// builder.Services.AddHttpClient<AccountClient>(client =>
-// {
-//     client.BaseAddress = new Uri("https://localhost:7205");
-// });
 builder.Services.AddTransient<HttpTrackerHandler>();
 
 builder.Services
@@ -56,6 +52,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("default");
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
