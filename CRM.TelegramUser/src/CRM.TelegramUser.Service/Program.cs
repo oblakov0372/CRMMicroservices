@@ -1,6 +1,6 @@
 using CRM.Common.Authentication;
+using CRM.Common.HttpHandler;
 using CRM.Common.MongoDb;
-using CRM.TelegramUser.Service.Clients;
 using CRM.TelegramUser.Service.Entities;
 using CRM.TelegramUser.Service.TelegramUserManagement;
 
@@ -16,13 +16,14 @@ AuthenticationHelper.ConfigureAuthentication(builder.Services, builder.Configura
 
 builder.Services.AddAuthorization();
 
-builder.Services.AddMongo()
-                .AddMongoRepository<TelegramUserEntity>("telegramUsers");
-
 builder.Services.AddScoped<ITelegramUserManagementService, TelegramUserManagementService>();
-builder.Services.AddHttpContextAccessor();
 
-#region CORS
+builder.Services.AddTransient<HttpTrackerHandler>();
+
+builder.Services
+    .AddHttpClient("auth")
+    .AddHttpMessageHandler<HttpTrackerHandler>();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("default", policy =>
@@ -32,15 +33,13 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod();
     });
 });
-#endregion
 
-builder.Services.AddHttpClient<TelegramMessageClient>(client =>
-{
-    client.BaseAddress = new Uri("https://localhost:7202");
-});
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddMongo()
+                .AddMongoRepository<TelegramUserEntity>("telegramUsers");
+
 var app = builder.Build();
-
-
 
 if (app.Environment.IsDevelopment())
 {

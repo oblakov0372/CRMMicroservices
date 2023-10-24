@@ -5,6 +5,7 @@ using CRM.Deal.Service;
 using CRM.Deal.Service.DealManagement;
 using Microsoft.AspNetCore.Authorization;
 using CRM.Common.HttpHandler;
+using CRM.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 

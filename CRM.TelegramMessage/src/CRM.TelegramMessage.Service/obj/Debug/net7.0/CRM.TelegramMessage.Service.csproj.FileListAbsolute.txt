@@ -53,3 +53,4 @@ D:\Developing\CRM.Microservices\CRM.TelegramMessage\src\CRM.TelegramMessage.Serv
 D:\Developing\CRM.Microservices\CRM.TelegramMessage\src\CRM.TelegramMessage.Service\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 D:\Developing\CRM.Microservices\CRM.TelegramMessage\src\CRM.TelegramMessage.Service\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
 D:\Developing\CRM.Microservices\CRM.TelegramMessage\src\CRM.TelegramMessage.Service\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
+D:\Developing\CRM.Microservices\CRM.TelegramMessage\src\CRM.TelegramMessage.Service\bin\Debug\net7.0\System.Security.Permissions.dll

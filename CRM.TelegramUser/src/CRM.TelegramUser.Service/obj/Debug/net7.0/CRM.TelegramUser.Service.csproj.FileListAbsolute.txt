@@ -53,3 +53,5 @@ D:\Developing\CRM.Microservices\CRM.TelegramUser\src\CRM.TelegramUser.Service\ob
 D:\Developing\CRM.Microservices\CRM.TelegramUser\src\CRM.TelegramUser.Service\obj\Debug\net7.0\CRM.TelegramUser.Service.pdb
 D:\Developing\CRM.Microservices\CRM.TelegramUser\src\CRM.TelegramUser.Service\obj\Debug\net7.0\CRM.TelegramUser.Service.genruntimeconfig.cache
 D:\Developing\CRM.Microservices\CRM.TelegramUser\src\CRM.TelegramUser.Service\obj\Debug\net7.0\ref\CRM.TelegramUser.Service.dll
+D:\Developing\CRM.Microservices\CRM.TelegramUser\src\CRM.TelegramUser.Service\bin\Debug\net7.0\Newtonsoft.Json.dll
+D:\Developing\CRM.Microservices\CRM.TelegramUser\src\CRM.TelegramUser.Service\bin\Debug\net7.0\System.Security.Permissions.dll

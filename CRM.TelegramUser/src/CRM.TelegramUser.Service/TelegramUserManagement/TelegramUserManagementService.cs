@@ -6,18 +6,19 @@ namespace CRM.TelegramUser.Service.TelegramUserManagement
 {
   public class TelegramUserManagementService : ITelegramUserManagementService
   {
-    private readonly IRepository<TelegramUserEntity> repository;
+    private readonly IRepository<TelegramUserEntity> _repository;
     private readonly TelegramMessageClient telegramMessageClient;
-
-    public TelegramUserManagementService(IRepository<TelegramUserEntity> repository, TelegramMessageClient telegramMessageClient)
+    private readonly IHttpClientFactory _httpClientFactory;
+    public TelegramUserManagementService(IRepository<TelegramUserEntity> repository, IHttpClientFactory httpClientFactory)
     {
-      this.repository = repository;
-      this.telegramMessageClient = telegramMessageClient;
+      _repository = repository;
+      _httpClientFactory = httpClientFactory;
+      telegramMessageClient = new TelegramMessageClient("https://localhost:7202", _httpClientFactory.CreateClient("auth"));
     }
 
     public async Task<(IEnumerable<TelegramUserLiteDto>, int)> GetAllTelegramUsersAsync(TelegramUsersParameters parameters)
     {
-      var query = await repository.GetAllAsync();
+      var query = await _repository.GetAllAsync();
       if (!string.IsNullOrEmpty(parameters.SearchQuery))
       {
         var byUsername = query
@@ -43,18 +44,18 @@ namespace CRM.TelegramUser.Service.TelegramUserManagement
     }
     public async Task<bool> EditUserStatusAsync(long telegramUserId, Status status)
     {
-      var existingUser = await repository.GetAsync(user => user.TelegramId == telegramUserId);
+      var existingUser = await _repository.GetAsync(user => user.TelegramId == telegramUserId);
 
       if (existingUser == null)
         return false;
       existingUser.Status = status;
-      await repository.UpdateAsync(existingUser);
+      await _repository.UpdateAsync(existingUser);
       return true;
     }
 
     public async Task<TelegramUserDto> GetDataForTelegramUserAsync(long telegramId)
     {
-      var existingUser = await repository.GetAsync(u => u.TelegramId == telegramId);
+      var existingUser = await _repository.GetAsync(u => u.TelegramId == telegramId);
       if (existingUser == null)
         return null;
       IEnumerable<TelegramMessageDto> telegramUserMessages = (await telegramMessageClient.GetUserTelegramMessages(telegramId));
