@@ -11,8 +11,8 @@ import uuid
 with open('config.json', 'r') as json_file:
     config = json.load(json_file)
 
-api_id = 22332340
-api_hash = "e054c9c8b94d7737b5121aaf72399ed7"
+api_id = config["api_id"]
+api_hash = config["api_hash"]
 
 mongodb_uri_telegramMessage = config["mongodb_uri_telegramMessage"]
 mongodb_uri_telegramAccount = config["mongodb_uri_telegramAccount"]
