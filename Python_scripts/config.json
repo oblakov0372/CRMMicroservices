@@ -1,4 +1,0 @@
-{
-  "mongodb_uri_telegramMessage": "mongodb://localhost:27017/telegramMessages",
-  "mongodb_uri_telegramAccount": "mongodb://localhost:27017/telegramUsers"
-}

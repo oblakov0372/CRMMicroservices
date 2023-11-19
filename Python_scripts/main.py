@@ -6,11 +6,13 @@ import re
 import json
 import uuid
 
-api_id = 22332340
-api_hash = "e054c9c8b94d7737b5121aaf72399ed7"
+
 
 with open('config.json', 'r') as json_file:
     config = json.load(json_file)
+
+api_id = 22332340
+api_hash = "e054c9c8b94d7737b5121aaf72399ed7"
 
 mongodb_uri_telegramMessage = config["mongodb_uri_telegramMessage"]
 mongodb_uri_telegramAccount = config["mongodb_uri_telegramAccount"]
